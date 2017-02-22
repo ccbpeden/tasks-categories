@@ -32,7 +32,6 @@
 
             $description = "Wash the dog";
             $due_date = "2017-02-21";
-            echo($due_date);
             $category_id = $test_category->getId();
             $test_task = new Task($description, $id, $category_id, $due_date);
             $test_task->save();
@@ -108,9 +107,6 @@
 
             //Act
             $result = Task::getAll();
-            // echo("result is: ");
-            // var_dump($result[0]);
-            // var_dump($result[1]);
 
 
             //Assert
