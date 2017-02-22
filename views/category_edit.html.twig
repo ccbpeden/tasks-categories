@@ -16,5 +16,11 @@
             <button type="submit">Update</button>
 
         </form>
+
+        <form action="/categories/{{ category.getId }}" method="post">
+            <input type="hidden" name="_method" value="delete">
+
+            <button type="submit">Delete this category</button>
+        </form>
     </body>
 </html>

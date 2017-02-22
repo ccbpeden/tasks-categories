@@ -136,7 +136,7 @@
 
             //Act
             $result = $test_category->getTasks();
-            
+
 
             //Assert
             $this->assertEquals([$test_task, $test_task2], $result);
@@ -157,6 +157,44 @@
 
             // Assert
             $this->assertEquals("Home stuff", $test_category->getName());
+        }
+
+        function testDelete()
+        {
+            // Arrange
+            $name = "Work stuff";
+            $id = null;
+            $test_category = new Category($name, $id);
+            $test_category->save();
+
+            $name2 = "Home stuff";
+            $test_category2 = new Category($name2, $id);
+            $test_category2->save();
+
+            // Act
+            $test_category->delete();
+
+            // Assert
+            $this->assertEquals([$test_category2], Category::getAll());
+        }
+
+        function testDeleteCategoryTasks()
+        {
+            // Arrange
+            $name = "Work Stuff";
+            $id = null;
+            $test_category = new Category($name, $id);
+            $test_category->save();
+
+            $description = "Build Website";
+            $category_id = $test_category->getId();
+            $task_due_date = "2017-02-22";
+            $test_task = new Task($description, $id, $category_id, $task_due_date);
+            $test_task->save();
+
+            $test_category->delete();
+
+            $this->assertEquals([], Task::GetAll());
         }
     }
 ?>
