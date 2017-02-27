@@ -6,6 +6,12 @@
     <h1>{{ task.getDescription }}</h1>
     <h2>{{ task.getDueDate }}</h2>
 
+    {% if task.getCompleted %}
+        <h2>Task completed!</h2>
+    {% else %}
+        <h2>Task not completed</h2>
+    {% endif %}
+
     {% if categories is not empty %}
         <p>Here are the categories for this task:</p>
         <ul>
@@ -14,6 +20,26 @@
             {% endfor %}
         </ul>
     {% endif %}
+
+    <h4>Edit this task</h4>
+    <form class="" action="/edit_task" method="post">
+        <input name="_method" type="hidden" value="patch">
+
+        <input type="hidden" name="id" id="id" value="{{ task.getId }}">
+
+        <label for="new_description">New Description</label>
+        <input type="text" name="new_description" id="new_description" value="{{ task.getDescription }}">
+        <br>
+        <label for="new_due_date">New Due Date</label>
+        <input type="text" name="new_due_date" id="new_due_date" value="{{ task.getDueDate }}">
+        <br>
+        <label for="completed">Is this task Complete?</label><br>
+        <input type="radio" name="completed" value=0 checked>No<br>
+        <input type="radio" name="completed" value=1>Yes<br>
+
+        <button type="submit" name="button">Submit</button>
+    </form>
+
 
     <h4>Add a category to this task:</h4>
 

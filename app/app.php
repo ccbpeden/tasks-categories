@@ -73,6 +73,15 @@
         $task->addCategory($category);
         return $app['twig']->render('task.html.twig', array('task' =>$task, 'tasks' => Task::getAll(), 'categories' =>$task->getCategories(), 'all_categories' => Category::getAll()));
     });
+
+    $app->patch("/edit_task", function() use ($app) {
+        $update_task = Task::find($_POST['id']);
+        $update_task->update($_POST['new_description'], $_POST['new_due_date'], $_POST['completed']);
+        $update_task_completed = $update_task->getCompleted();
+        return $app['twig']->render('task.html.twig', array('task' =>$update_task, 'tasks' => Task::getAll(), 'categories' =>$update_task->getCategories(), 'all_categories' => Category::getAll()));
+    });
+
+
     /// NOTE notice that function is receiving the parameter $id and that it is called in brackets in the route!!! WE ASSUME PENDING ANY EXPLANATION.
 
 
