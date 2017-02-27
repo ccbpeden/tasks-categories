@@ -218,6 +218,11 @@
         function testDeleteTask()
         {
             //Arrange
+            $name = "Home stuff";
+            $id = 3;
+            $test_category = new Category($name, $id);
+            $test_category->save();
+
             $description = "Wash the dog";
             $due_date = "2017-02-21";
             $id = 1;
@@ -232,10 +237,11 @@
 
 
             //Act
+            $test_task->addCategory($test_category);
             $test_task->delete();
 
             //Assert
-            $this->assertEquals([$test_task2], Task::getAll());
+            $this->assertEquals([$test_task2], $test_category->getTasks());
         }
 
         function testAddCategory()

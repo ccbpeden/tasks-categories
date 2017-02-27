@@ -96,19 +96,22 @@
         {
             // Arrange
             $name = "Work stuff";
-            $id = null;
+            $id = 1;
             $test_category = new Category($name, $id);
             $test_category->save();
 
-            $name2 = "Home stuff";
-            $test_category2 = new Category($name2, $id);
-            $test_category2->save();
+            $description = "File reports";
+            $due_date = "2018-12-11";
+            $id2 = 2;
+            $test_task = new Task($description, $due_date, $id2);
+            $test_task->save();
 
             // Act
+            $test_category->addTask($test_task);
             $test_category->delete();
 
             // Assert
-            $this->assertEquals([$test_category2], Category::getAll());
+            $this->assertEquals([], $test_task->getCategories());
         }
 
         function test_getAll()
