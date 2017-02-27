@@ -229,19 +229,12 @@
             $test_task = new Task($description, $due_date, $id);
             $test_task->save();
 
-            $description2 = "Water the lawn";
-            $due_date2 = "2017-01-21";
-            $id2 = 2;
-            $test_task2 = new Task($description2, $due_date2, $id2);
-            $test_task2->save();
-
-
             //Act
             $test_task->addCategory($test_category);
             $test_task->delete();
 
             //Assert
-            $this->assertEquals([$test_task2], $test_category->getTasks());
+            $this->assertEquals([], $test_category->getTasks());
         }
 
         function testAddCategory()
