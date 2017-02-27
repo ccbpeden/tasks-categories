@@ -26,7 +26,8 @@
         {
             // Arrange
                 $description = "Laundry";
-                $test_task = new Task($description);
+                $due_date = "2017-02-21";
+                $test_task = new Task($description, $due_date);
 
             // Act
                 $result = $test_task->getDescription();
@@ -40,7 +41,8 @@
         {
             //Arrange
             $description = "Do dishes.";
-            $test_task = new Task($description);
+            $due_date = "2017-02-21";
+            $test_task = new Task($description, $due_date);
 
             //Act
             $test_task->setDescription("Drink coffee.");
@@ -56,6 +58,7 @@
             //Arrange
             $description = "Wash the dog";
             $due_date = "2017-02-21";
+            $id = 1;
             $test_task = new Task($description, $due_date, $id);
             $test_task->save();
 
@@ -177,7 +180,6 @@
             $description = "Wash the dog";
             $due_date = "2017-02-21";
             $id = 1;
-            $category_id = $test_category->getId();
             $test_task = new Task($description, $due_date, $id);
             $test_task->save();
 
@@ -203,13 +205,14 @@
             $test_task = new Task($description, $due_date, $id);
             $test_task->save();
 
-            $new_description = "Clean the dog";
+            $new_description = "Impeach the President";
+            $new_due_date = "2018-11-10";
 
             //Act
-            $test_task->update($new_description);
+            $test_task->update($new_description, $new_due_date);
 
             //Assert
-            $this->assertEquals("Clean the dog", $test_task->getDescription());
+            $this->assertEquals("Impeach the President", $test_task->getDescription());
         }
 
         function testDeleteTask()
