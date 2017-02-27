@@ -23,15 +23,28 @@
             return $this->id;
         }
 
-        function getCategoryId()
-        {
-            return $this->category_id;
-        }
-
         function getDueDate()
         {
             return $this->due_date;
         }
+
+        function setDescription($new_description)
+        {
+            $this->description = (string) $new_description;
+        }
+
+        function setDueDate($new_due_date)
+        {
+            $this->due_date = (string) $new_due_date;
+        }
+
+        function save()
+        {
+            $GLOBALS['DB']->exec("INSERT INTO tasks (description, due_date) VALUES ('{$this->getDescription()}', '{$this->getDueDate()}')");
+
+            $this->id = $GLOBALS['DB']->lastInsertId();
+        }
+
 
         static function getAll()
         {
@@ -41,11 +54,15 @@
             $description = $task['description'];
             $due_date = $task['due_date'];
             $id = $task['id'];
-            $category_id = $task['category_id'];
-            $new_task = new Task($description, $id, $category_id, $due_date);
+            $new_task = new Task($description, $due_date, $id);
             array_push($tasks, $new_task);
           }
           return $tasks;
+        }
+
+        static function deleteAll()
+        {
+            $GLOBALS['DB']->exec("DELETE FROM tasks;");
         }
 
         static function find($search_id)
@@ -61,30 +78,16 @@
           return $found_task;
         }
 
-        function setDescription($new_description)
+        function update($new_description, $new_due_date)
         {
-          $this->description = (string) $new_description;
+            $GLOBALS['DB']->exec("UPDATE tasks SET description = '{$new_description}', due_date = '{$new_due_date}' WHERE id = {$this->getId()};");
+            $this->setDescription($new_description);
+            $this->setDueDate($new_due_date);
         }
 
-        function setDueDate($new_due_date)
+        function delete()
         {
-            $this->due_date = $new_due_date;
+            $GLOBALS['DB']->exec("DELETE FROM tasks WHERE id = {$this->getId()};");
         }
-
-        function save()
-        {
-            $GLOBALS['DB']->exec("INSERT INTO tasks (description, category_id, due_date) VALUES ('{$this->getDescription()}', {$this->getCategoryId()}, '{$this->getDueDate()}')");
-
-            // NOTE {$this->getCategoryId()} does not have quotes because you are looking to return an integer !!!
-
-            $this->id = $GLOBALS['DB']->lastInsertId();
-        }
-
-
-        static function deleteAll()
-        {
-          $GLOBALS['DB']->exec("DELETE FROM tasks;");
-        }
-
     }
 ?>
