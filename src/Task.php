@@ -3,13 +3,15 @@
     {
         private $description;
         private $due_date;
+        private $completed;
         private $id;
 
-        function __construct($description, $due_date, $id = null)
+        function __construct($description, $due_date, $completed = false, $id = null)
         {
             $this->description = $description;
             $this->id = $id;
             $this->due_date = $due_date;
+            $this->completed = $completed;
         }
 
 
@@ -28,6 +30,11 @@
             return $this->due_date;
         }
 
+        function getCompleted()
+        {
+            return $this->completed;
+        }
+
         function setDescription($new_description)
         {
             $this->description = (string) $new_description;
@@ -38,9 +45,19 @@
             $this->due_date = (string) $new_due_date;
         }
 
+        function setCompleted()
+        {
+            $this->completed = 1;
+        }
+
+        function setUncompleted()
+        {
+            $this->completed = 0;
+        }
+
         function save()
         {
-            $GLOBALS['DB']->exec("INSERT INTO tasks (description, due_date) VALUES ('{$this->getDescription()}', '{$this->getDueDate()}')");
+            $GLOBALS['DB']->exec("INSERT INTO tasks (description, due_date, completed) VALUES ('{$this->getDescription()}', '{$this->getDueDate()}', '{$this->getCompleted()}');");
 
             $this->id = $GLOBALS['DB']->lastInsertId();
         }
@@ -53,8 +70,9 @@
           foreach($returned_tasks as $task) {
             $description = $task['description'];
             $due_date = $task['due_date'];
+            $completed = $task['completed'];
             $id = $task['id'];
-            $new_task = new Task($description, $due_date, $id);
+            $new_task = new Task($description, $due_date, $completed, $id);
             array_push($tasks, $new_task);
           }
           return $tasks;
@@ -78,11 +96,17 @@
           return $found_task;
         }
 
-        function update($new_description, $new_due_date)
+        function update($new_description, $new_due_date, $new_completed)
         {
-            $GLOBALS['DB']->exec("UPDATE tasks SET description = '{$new_description}', due_date = '{$new_due_date}' WHERE id = {$this->getId()};");
+            $GLOBALS['DB']->exec("UPDATE tasks SET description = '{$new_description}', due_date = '{$new_due_date}', completed = '{$new_completed}' WHERE id = {$this->getId()};");
             $this->setDescription($new_description);
             $this->setDueDate($new_due_date);
+            if($new_completed == 1)
+            {
+                $this->setCompleted();
+            } else {
+                $this->setUncompleted();
+            }
         }
 
         function delete()

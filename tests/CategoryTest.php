@@ -102,8 +102,9 @@
 
             $description = "File reports";
             $due_date = "2018-12-11";
+            $completed = 0;
             $id2 = 2;
-            $test_task = new Task($description, $due_date, $id2);
+            $test_task = new Task($description, $due_date, $completed, $id2);
             $test_task->save();
 
             // Act
@@ -180,8 +181,9 @@
 
             $description = "File reports";
             $due_date = "2016-12-25";
+            $completed = 0;
             $id2 = 2;
-            $test_task = new Task($description, $due_date, $id2);
+            $test_task = new Task($description, $due_date, $completed, $id2);
             $test_task->save();
 
             //Act
@@ -202,15 +204,17 @@
 
             $description = "Email client";
             $due_date = "2017-02-21";
+            $completed = 0;
             $id2 = 2;
-            $test_task = new Task($description, $due_date, $id2);
+            $test_task = new Task($description, $due_date, $completed, $id2);
             $test_task->save();
 
 
             $description2 = "Meet with boss";
             $due_date2 = "2017-02-21";
+            $completed2 = 0;
             $id3 = 3;
-            $test_task2 = new Task($description2, $due_date2, $id3);
+            $test_task2 = new Task($description2, $due_date2, $completed2, $id3);
             $test_task2->save();
 
 
