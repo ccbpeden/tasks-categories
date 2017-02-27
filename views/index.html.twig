@@ -5,25 +5,8 @@
 <body>
     <h1>Welcome to To Do List</h1>
 
-    <p>Create a new category:</p>
-
-    <form action="/categories" method="post">
-        <label for="name">Category Name:</label>
-        <input id="name" type="text" name="name">
-
-        <button type="submit" name="button">Add Category</button>
-    </form>
-
-    {% if categories is not empty %}
-    <p>Here are your categories!</p>
-    <ul>
-        {% for category in categories %}
-            </li><a href="/categories/{{category.getID}}">{{category.getName}}</a></li>
-        {% endfor %}
-    </ul>
-    {% else %}
-        <p> There are no categories yet! </p>
-    {% endif %}
+    <h3><a href="/categories">Add or view a category</a></h3>
+    <h3><a href="/tasks">Add or view a task</a></h3>
 
 </body>
 </html>
